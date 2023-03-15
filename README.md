@@ -1,24 +1,14 @@
 # go-manage
-This is a base project 
+This is a base admin project 
 
 use Ent orm
 
-mkdir go-manage
+### road-map
 
-cd go-manage
+-[ ] casbin
 
-go mod init go-manage
+-[ ] captcha
 
-goctl api new core
+-[ ] Makefile
 
-go mod tidy
-
-mkdir pkg/ent
-
-cd pkg
-
-go run -mod=mod entgo.io/ent/cmd/ent new User Company Personal
-
-go generate ./ent
-
-goctl api go -api .\api\all.api -dir . -style go_zero
+-[ ] docker-compose
