@@ -9,88 +9,88 @@ import (
 )
 
 var (
-	// TCompanyColumns holds the columns for the "t_company" table.
-	TCompanyColumns = []*schema.Column{
+	// TbCompanyColumns holds the columns for the "tb_company" table.
+	TbCompanyColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "company_name", Type: field.TypeString},
 		{Name: "contract_phone", Type: field.TypeString},
 		{Name: "user_id", Type: field.TypeInt, Nullable: true},
 	}
-	// TCompanyTable holds the schema information for the "t_company" table.
-	TCompanyTable = &schema.Table{
-		Name:       "t_company",
-		Columns:    TCompanyColumns,
-		PrimaryKey: []*schema.Column{TCompanyColumns[0]},
+	// TbCompanyTable holds the schema information for the "tb_company" table.
+	TbCompanyTable = &schema.Table{
+		Name:       "tb_company",
+		Columns:    TbCompanyColumns,
+		PrimaryKey: []*schema.Column{TbCompanyColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
-				Symbol:     "t_company_t_user_companys",
-				Columns:    []*schema.Column{TCompanyColumns[3]},
-				RefColumns: []*schema.Column{TUserColumns[0]},
+				Symbol:     "tb_company_tb_user_companys",
+				Columns:    []*schema.Column{TbCompanyColumns[3]},
+				RefColumns: []*schema.Column{TbUserColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
 	}
-	// TPersonalColumns holds the columns for the "t_personal" table.
-	TPersonalColumns = []*schema.Column{
+	// TbPersonalColumns holds the columns for the "tb_personal" table.
+	TbPersonalColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "name", Type: field.TypeString},
 		{Name: "phone", Type: field.TypeString},
 		{Name: "user_id", Type: field.TypeInt, Nullable: true},
 	}
-	// TPersonalTable holds the schema information for the "t_personal" table.
-	TPersonalTable = &schema.Table{
-		Name:       "t_personal",
-		Columns:    TPersonalColumns,
-		PrimaryKey: []*schema.Column{TPersonalColumns[0]},
+	// TbPersonalTable holds the schema information for the "tb_personal" table.
+	TbPersonalTable = &schema.Table{
+		Name:       "tb_personal",
+		Columns:    TbPersonalColumns,
+		PrimaryKey: []*schema.Column{TbPersonalColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
-				Symbol:     "t_personal_t_user_personals",
-				Columns:    []*schema.Column{TPersonalColumns[3]},
-				RefColumns: []*schema.Column{TUserColumns[0]},
+				Symbol:     "tb_personal_tb_user_personals",
+				Columns:    []*schema.Column{TbPersonalColumns[3]},
+				RefColumns: []*schema.Column{TbUserColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
 	}
-	// TUserColumns holds the columns for the "t_user" table.
-	TUserColumns = []*schema.Column{
+	// TbUserColumns holds the columns for the "tb_user" table.
+	TbUserColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "user_name", Type: field.TypeJSON},
-		{Name: "password", Type: field.TypeJSON},
+		{Name: "user_name", Type: field.TypeString},
+		{Name: "password", Type: field.TypeString},
 		{Name: "parent_id", Type: field.TypeInt, Nullable: true},
 	}
-	// TUserTable holds the schema information for the "t_user" table.
-	TUserTable = &schema.Table{
-		Name:       "t_user",
-		Columns:    TUserColumns,
-		PrimaryKey: []*schema.Column{TUserColumns[0]},
+	// TbUserTable holds the schema information for the "tb_user" table.
+	TbUserTable = &schema.Table{
+		Name:       "tb_user",
+		Columns:    TbUserColumns,
+		PrimaryKey: []*schema.Column{TbUserColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
-				Symbol:     "t_user_t_user_children",
-				Columns:    []*schema.Column{TUserColumns[3]},
-				RefColumns: []*schema.Column{TUserColumns[0]},
+				Symbol:     "tb_user_tb_user_children",
+				Columns:    []*schema.Column{TbUserColumns[3]},
+				RefColumns: []*schema.Column{TbUserColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
-		TCompanyTable,
-		TPersonalTable,
-		TUserTable,
+		TbCompanyTable,
+		TbPersonalTable,
+		TbUserTable,
 	}
 )
 
 func init() {
-	TCompanyTable.ForeignKeys[0].RefTable = TUserTable
-	TCompanyTable.Annotation = &entsql.Annotation{
-		Table: "t_company",
+	TbCompanyTable.ForeignKeys[0].RefTable = TbUserTable
+	TbCompanyTable.Annotation = &entsql.Annotation{
+		Table: "tb_company",
 	}
-	TPersonalTable.ForeignKeys[0].RefTable = TUserTable
-	TPersonalTable.Annotation = &entsql.Annotation{
-		Table: "t_personal",
+	TbPersonalTable.ForeignKeys[0].RefTable = TbUserTable
+	TbPersonalTable.Annotation = &entsql.Annotation{
+		Table: "tb_personal",
 	}
-	TUserTable.ForeignKeys[0].RefTable = TUserTable
-	TUserTable.Annotation = &entsql.Annotation{
-		Table: "t_user",
+	TbUserTable.ForeignKeys[0].RefTable = TbUserTable
+	TbUserTable.Annotation = &entsql.Annotation{
+		Table: "tb_user",
 	}
 }

@@ -16,12 +16,12 @@ const (
 	// EdgeUsers holds the string denoting the users edge name in mutations.
 	EdgeUsers = "users"
 	// Table holds the table name of the personal in the database.
-	Table = "t_personal"
+	Table = "tb_personal"
 	// UsersTable is the table that holds the users relation/edge.
-	UsersTable = "t_personal"
+	UsersTable = "tb_personal"
 	// UsersInverseTable is the table name for the User entity.
 	// It exists in this package in order to avoid circular dependency with the "user" package.
-	UsersInverseTable = "t_user"
+	UsersInverseTable = "tb_user"
 	// UsersColumn is the table column denoting the users relation/edge.
 	UsersColumn = "user_id"
 )

@@ -22,27 +22,27 @@ const (
 	// EdgeChildren holds the string denoting the children edge name in mutations.
 	EdgeChildren = "children"
 	// Table holds the table name of the user in the database.
-	Table = "t_user"
+	Table = "tb_user"
 	// PersonalsTable is the table that holds the personals relation/edge.
-	PersonalsTable = "t_personal"
+	PersonalsTable = "tb_personal"
 	// PersonalsInverseTable is the table name for the Personal entity.
 	// It exists in this package in order to avoid circular dependency with the "personal" package.
-	PersonalsInverseTable = "t_personal"
+	PersonalsInverseTable = "tb_personal"
 	// PersonalsColumn is the table column denoting the personals relation/edge.
 	PersonalsColumn = "user_id"
 	// CompanysTable is the table that holds the companys relation/edge.
-	CompanysTable = "t_company"
+	CompanysTable = "tb_company"
 	// CompanysInverseTable is the table name for the Company entity.
 	// It exists in this package in order to avoid circular dependency with the "company" package.
-	CompanysInverseTable = "t_company"
+	CompanysInverseTable = "tb_company"
 	// CompanysColumn is the table column denoting the companys relation/edge.
 	CompanysColumn = "user_id"
 	// ParentTable is the table that holds the parent relation/edge.
-	ParentTable = "t_user"
+	ParentTable = "tb_user"
 	// ParentColumn is the table column denoting the parent relation/edge.
 	ParentColumn = "parent_id"
 	// ChildrenTable is the table that holds the children relation/edge.
-	ChildrenTable = "t_user"
+	ChildrenTable = "tb_user"
 	// ChildrenColumn is the table column denoting the children relation/edge.
 	ChildrenColumn = "parent_id"
 )
