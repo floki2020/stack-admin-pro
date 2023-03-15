@@ -3,7 +3,6 @@
 package ent
 
 import (
-	"encoding/json"
 	"fmt"
 	"go-manage/pkg/ent/user"
 	"strings"
@@ -17,9 +16,9 @@ type User struct {
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
 	// 登录用户名
-	UserName []string `json:"user_name,omitempty"`
+	UserName string `json:"user_name,omitempty"`
 	// 密码
-	Password []string `json:"password,omitempty"`
+	Password string `json:"password,omitempty"`
 	// 父级别ID
 	ParentID int `json:"parent_id,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -87,10 +86,10 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldUserName, user.FieldPassword:
-			values[i] = new([]byte)
 		case user.FieldID, user.FieldParentID:
 			values[i] = new(sql.NullInt64)
+		case user.FieldUserName, user.FieldPassword:
+			values[i] = new(sql.NullString)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type User", columns[i])
 		}
@@ -113,20 +112,16 @@ func (u *User) assignValues(columns []string, values []any) error {
 			}
 			u.ID = int(value.Int64)
 		case user.FieldUserName:
-			if value, ok := values[i].(*[]byte); !ok {
+			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field user_name", values[i])
-			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &u.UserName); err != nil {
-					return fmt.Errorf("unmarshal field user_name: %w", err)
-				}
+			} else if value.Valid {
+				u.UserName = value.String
 			}
 		case user.FieldPassword:
-			if value, ok := values[i].(*[]byte); !ok {
+			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field password", values[i])
-			} else if value != nil && len(*value) > 0 {
-				if err := json.Unmarshal(*value, &u.Password); err != nil {
-					return fmt.Errorf("unmarshal field password: %w", err)
-				}
+			} else if value.Valid {
+				u.Password = value.String
 			}
 		case user.FieldParentID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -183,10 +178,10 @@ func (u *User) String() string {
 	builder.WriteString("User(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", u.ID))
 	builder.WriteString("user_name=")
-	builder.WriteString(fmt.Sprintf("%v", u.UserName))
+	builder.WriteString(u.UserName)
 	builder.WriteString(", ")
 	builder.WriteString("password=")
-	builder.WriteString(fmt.Sprintf("%v", u.Password))
+	builder.WriteString(u.Password)
 	builder.WriteString(", ")
 	builder.WriteString("parent_id=")
 	builder.WriteString(fmt.Sprintf("%v", u.ParentID))

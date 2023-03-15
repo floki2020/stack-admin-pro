@@ -22,13 +22,13 @@ type UserCreate struct {
 }
 
 // SetUserName sets the "user_name" field.
-func (uc *UserCreate) SetUserName(s []string) *UserCreate {
+func (uc *UserCreate) SetUserName(s string) *UserCreate {
 	uc.mutation.SetUserName(s)
 	return uc
 }
 
 // SetPassword sets the "password" field.
-func (uc *UserCreate) SetPassword(s []string) *UserCreate {
+func (uc *UserCreate) SetPassword(s string) *UserCreate {
 	uc.mutation.SetPassword(s)
 	return uc
 }
@@ -164,11 +164,11 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_spec = sqlgraph.NewCreateSpec(user.Table, sqlgraph.NewFieldSpec(user.FieldID, field.TypeInt))
 	)
 	if value, ok := uc.mutation.UserName(); ok {
-		_spec.SetField(user.FieldUserName, field.TypeJSON, value)
+		_spec.SetField(user.FieldUserName, field.TypeString, value)
 		_node.UserName = value
 	}
 	if value, ok := uc.mutation.Password(); ok {
-		_spec.SetField(user.FieldPassword, field.TypeJSON, value)
+		_spec.SetField(user.FieldPassword, field.TypeString, value)
 		_node.Password = value
 	}
 	if nodes := uc.mutation.PersonalsIDs(); len(nodes) > 0 {

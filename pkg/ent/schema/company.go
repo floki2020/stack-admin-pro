@@ -31,6 +31,6 @@ func (Company) Edges() []ent.Edge {
 
 func (Company) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "t_company"},
+		entsql.Annotation{Table: "tb_company"},
 	}
 }

@@ -13,7 +13,6 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"entgo.io/ent/dialect/sql/sqljson"
 	"entgo.io/ent/schema/field"
 )
 
@@ -31,26 +30,14 @@ func (uu *UserUpdate) Where(ps ...predicate.User) *UserUpdate {
 }
 
 // SetUserName sets the "user_name" field.
-func (uu *UserUpdate) SetUserName(s []string) *UserUpdate {
+func (uu *UserUpdate) SetUserName(s string) *UserUpdate {
 	uu.mutation.SetUserName(s)
 	return uu
 }
 
-// AppendUserName appends s to the "user_name" field.
-func (uu *UserUpdate) AppendUserName(s []string) *UserUpdate {
-	uu.mutation.AppendUserName(s)
-	return uu
-}
-
 // SetPassword sets the "password" field.
-func (uu *UserUpdate) SetPassword(s []string) *UserUpdate {
+func (uu *UserUpdate) SetPassword(s string) *UserUpdate {
 	uu.mutation.SetPassword(s)
-	return uu
-}
-
-// AppendPassword appends s to the "password" field.
-func (uu *UserUpdate) AppendPassword(s []string) *UserUpdate {
-	uu.mutation.AppendPassword(s)
 	return uu
 }
 
@@ -235,20 +222,10 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 	}
 	if value, ok := uu.mutation.UserName(); ok {
-		_spec.SetField(user.FieldUserName, field.TypeJSON, value)
-	}
-	if value, ok := uu.mutation.AppendedUserName(); ok {
-		_spec.AddModifier(func(u *sql.UpdateBuilder) {
-			sqljson.Append(u, user.FieldUserName, value)
-		})
+		_spec.SetField(user.FieldUserName, field.TypeString, value)
 	}
 	if value, ok := uu.mutation.Password(); ok {
-		_spec.SetField(user.FieldPassword, field.TypeJSON, value)
-	}
-	if value, ok := uu.mutation.AppendedPassword(); ok {
-		_spec.AddModifier(func(u *sql.UpdateBuilder) {
-			sqljson.Append(u, user.FieldPassword, value)
-		})
+		_spec.SetField(user.FieldPassword, field.TypeString, value)
 	}
 	if uu.mutation.PersonalsCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -435,26 +412,14 @@ type UserUpdateOne struct {
 }
 
 // SetUserName sets the "user_name" field.
-func (uuo *UserUpdateOne) SetUserName(s []string) *UserUpdateOne {
+func (uuo *UserUpdateOne) SetUserName(s string) *UserUpdateOne {
 	uuo.mutation.SetUserName(s)
 	return uuo
 }
 
-// AppendUserName appends s to the "user_name" field.
-func (uuo *UserUpdateOne) AppendUserName(s []string) *UserUpdateOne {
-	uuo.mutation.AppendUserName(s)
-	return uuo
-}
-
 // SetPassword sets the "password" field.
-func (uuo *UserUpdateOne) SetPassword(s []string) *UserUpdateOne {
+func (uuo *UserUpdateOne) SetPassword(s string) *UserUpdateOne {
 	uuo.mutation.SetPassword(s)
-	return uuo
-}
-
-// AppendPassword appends s to the "password" field.
-func (uuo *UserUpdateOne) AppendPassword(s []string) *UserUpdateOne {
-	uuo.mutation.AppendPassword(s)
 	return uuo
 }
 
@@ -669,20 +634,10 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 		}
 	}
 	if value, ok := uuo.mutation.UserName(); ok {
-		_spec.SetField(user.FieldUserName, field.TypeJSON, value)
-	}
-	if value, ok := uuo.mutation.AppendedUserName(); ok {
-		_spec.AddModifier(func(u *sql.UpdateBuilder) {
-			sqljson.Append(u, user.FieldUserName, value)
-		})
+		_spec.SetField(user.FieldUserName, field.TypeString, value)
 	}
 	if value, ok := uuo.mutation.Password(); ok {
-		_spec.SetField(user.FieldPassword, field.TypeJSON, value)
-	}
-	if value, ok := uuo.mutation.AppendedPassword(); ok {
-		_spec.AddModifier(func(u *sql.UpdateBuilder) {
-			sqljson.Append(u, user.FieldPassword, value)
-		})
+		_spec.SetField(user.FieldPassword, field.TypeString, value)
 	}
 	if uuo.mutation.PersonalsCleared() {
 		edge := &sqlgraph.EdgeSpec{

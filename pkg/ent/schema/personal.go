@@ -31,6 +31,6 @@ func (Personal) Edges() []ent.Edge {
 
 func (Personal) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "t_personal"},
+		entsql.Annotation{Table: "tb_personal"},
 	}
 }

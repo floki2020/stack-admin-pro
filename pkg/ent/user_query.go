@@ -404,7 +404,7 @@ func (uq *UserQuery) WithChildren(opts ...func(*UserQuery)) *UserQuery {
 // Example:
 //
 //	var v []struct {
-//		UserName []string `json:"user_name,omitempty"`
+//		UserName string `json:"user_name,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
@@ -427,7 +427,7 @@ func (uq *UserQuery) GroupBy(field string, fields ...string) *UserGroupBy {
 // Example:
 //
 //	var v []struct {
-//		UserName []string `json:"user_name,omitempty"`
+//		UserName string `json:"user_name,omitempty"`
 //	}
 //
 //	client.User.Query().

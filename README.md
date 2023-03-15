@@ -20,3 +20,5 @@ cd pkg
 go run -mod=mod entgo.io/ent/cmd/ent new User Company Personal
 
 go generate ./ent
+
+goctl api go -api .\api\all.api -dir . -style go_zero

@@ -16,8 +16,8 @@ type User struct {
 // Fields of the User.
 func (User) Fields() []ent.Field {
 	return []ent.Field{
-		field.Strings("user_name").Comment("登录用户名"),
-		field.Strings("password").Comment("密码"),
+		field.String("user_name").Comment("登录用户名"),
+		field.String("password").Comment("密码"),
 		field.Int("parent_id").Optional().Comment("父级别ID"),
 	}
 }
@@ -33,6 +33,6 @@ func (User) Edges() []ent.Edge {
 
 func (User) Annotations() []schema.Annotation {
 	return []schema.Annotation{
-		entsql.Annotation{Table: "t_user"},
+		entsql.Annotation{Table: "tb_user"},
 	}
 }

@@ -1086,10 +1086,8 @@ type UserMutation struct {
 	op               Op
 	typ              string
 	id               *int
-	user_name        *[]string
-	appenduser_name  []string
-	password         *[]string
-	appendpassword   []string
+	user_name        *string
+	password         *string
 	clearedFields    map[string]struct{}
 	personals        map[int]struct{}
 	removedpersonals map[int]struct{}
@@ -1206,13 +1204,12 @@ func (m *UserMutation) IDs(ctx context.Context) ([]int, error) {
 }
 
 // SetUserName sets the "user_name" field.
-func (m *UserMutation) SetUserName(s []string) {
+func (m *UserMutation) SetUserName(s string) {
 	m.user_name = &s
-	m.appenduser_name = nil
 }
 
 // UserName returns the value of the "user_name" field in the mutation.
-func (m *UserMutation) UserName() (r []string, exists bool) {
+func (m *UserMutation) UserName() (r string, exists bool) {
 	v := m.user_name
 	if v == nil {
 		return
@@ -1223,7 +1220,7 @@ func (m *UserMutation) UserName() (r []string, exists bool) {
 // OldUserName returns the old "user_name" field's value of the User entity.
 // If the User object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *UserMutation) OldUserName(ctx context.Context) (v []string, err error) {
+func (m *UserMutation) OldUserName(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldUserName is only allowed on UpdateOne operations")
 	}
@@ -1237,33 +1234,18 @@ func (m *UserMutation) OldUserName(ctx context.Context) (v []string, err error) 
 	return oldValue.UserName, nil
 }
 
-// AppendUserName adds s to the "user_name" field.
-func (m *UserMutation) AppendUserName(s []string) {
-	m.appenduser_name = append(m.appenduser_name, s...)
-}
-
-// AppendedUserName returns the list of values that were appended to the "user_name" field in this mutation.
-func (m *UserMutation) AppendedUserName() ([]string, bool) {
-	if len(m.appenduser_name) == 0 {
-		return nil, false
-	}
-	return m.appenduser_name, true
-}
-
 // ResetUserName resets all changes to the "user_name" field.
 func (m *UserMutation) ResetUserName() {
 	m.user_name = nil
-	m.appenduser_name = nil
 }
 
 // SetPassword sets the "password" field.
-func (m *UserMutation) SetPassword(s []string) {
+func (m *UserMutation) SetPassword(s string) {
 	m.password = &s
-	m.appendpassword = nil
 }
 
 // Password returns the value of the "password" field in the mutation.
-func (m *UserMutation) Password() (r []string, exists bool) {
+func (m *UserMutation) Password() (r string, exists bool) {
 	v := m.password
 	if v == nil {
 		return
@@ -1274,7 +1256,7 @@ func (m *UserMutation) Password() (r []string, exists bool) {
 // OldPassword returns the old "password" field's value of the User entity.
 // If the User object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *UserMutation) OldPassword(ctx context.Context) (v []string, err error) {
+func (m *UserMutation) OldPassword(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldPassword is only allowed on UpdateOne operations")
 	}
@@ -1288,23 +1270,9 @@ func (m *UserMutation) OldPassword(ctx context.Context) (v []string, err error) 
 	return oldValue.Password, nil
 }
 
-// AppendPassword adds s to the "password" field.
-func (m *UserMutation) AppendPassword(s []string) {
-	m.appendpassword = append(m.appendpassword, s...)
-}
-
-// AppendedPassword returns the list of values that were appended to the "password" field in this mutation.
-func (m *UserMutation) AppendedPassword() ([]string, bool) {
-	if len(m.appendpassword) == 0 {
-		return nil, false
-	}
-	return m.appendpassword, true
-}
-
 // ResetPassword resets all changes to the "password" field.
 func (m *UserMutation) ResetPassword() {
 	m.password = nil
-	m.appendpassword = nil
 }
 
 // SetParentID sets the "parent_id" field.
@@ -1627,14 +1595,14 @@ func (m *UserMutation) OldField(ctx context.Context, name string) (ent.Value, er
 func (m *UserMutation) SetField(name string, value ent.Value) error {
 	switch name {
 	case user.FieldUserName:
-		v, ok := value.([]string)
+		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetUserName(v)
 		return nil
 	case user.FieldPassword:
-		v, ok := value.([]string)
+		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
