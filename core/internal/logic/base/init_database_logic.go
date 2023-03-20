@@ -2,7 +2,6 @@ package base
 
 import (
 	"context"
-	"entgo.io/ent/dialect/sql/schema"
 	"go-manage/core/internal/svc"
 	"go-manage/core/internal/types"
 
@@ -25,10 +24,10 @@ func NewInitDatabaseLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Init
 
 func (l *InitDatabaseLogic) InitDatabase() (resp *types.BaseMsgResp, err error) {
 	//初始化 table
-	l.svcCtx.Db.Db.Schema.Create(l.ctx, schema.WithForeignKeys(false), schema.WithDropColumn(true),
-		schema.WithDropIndex(true))
-	_, err = l.svcCtx.Db.Db.User.Create().SetUserName("admin").SetPassword("123").Save(l.ctx)
-
+	err = l.svcCtx.BaseModel.Init(l.ctx)
+	if err != nil {
+		return nil, err
+	}
 	resp = &types.BaseMsgResp{
 		Code: 200,
 		Msg:  "创建成功",

@@ -12,3 +12,7 @@ DatabaseConf:
   MaxOpenConn: 100
   SSLMode: disable # disable or require
   CacheTime: 5
+
+RedisConf:
+  Host: 101.42.99.188
+  Port: 6379

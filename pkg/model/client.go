@@ -6,18 +6,11 @@ import (
 	"go-manage/pkg/ent"
 )
 
-// EntClientSvc TODO: Returns the object directly
-type EntClientSvc struct {
-	Db *ent.Client
-}
-
-func NewEntClientService(c config.DatabaseConf) *EntClientSvc {
+func NewEntClientService(c config.DatabaseConf) *ent.Client {
 	db := ent.NewClient(
 		ent.Debug(),
 		ent.Log(logx.Info),
 		ent.Driver(c.NewNoCacheDriver()),
 	)
-	return &EntClientSvc{
-		Db: db,
-	}
+	return db
 }
