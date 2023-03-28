@@ -2,10 +2,8 @@ package middleware
 
 import (
 	"github.com/casbin/casbin/v2"
-	"github.com/zeromicro/go-zero/core/errorx"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stores/redis"
-	"github.com/zeromicro/go-zero/rest/httpx"
 	"net/http"
 	"strings"
 )
@@ -34,12 +32,25 @@ func (m *AuthorityMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 		jwtResult, err := m.Rds.Get("token_" + r.Header.Get("Authorization"))
 		if err != nil {
 			logx.Errorw("redis error in jwt", logx.Field("detail", err.Error()))
-			httpx.Error(w, errorx.NewApiError(http.StatusInternalServerError, err.Error()))
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 		if jwtResult == "1" {
 			logx.Errorw("token in blacklist", logx.Field("detail", r.Header.Get("Authorization")))
-			httpx.Error(w, errorx.NewApiErrorWithoutMsg(http.StatusUnauthorized))
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+		result := batchCheck(m.Cbn, roleIds, act, obj)
+
+		if result {
+			logx.Infow("HTTP/HTTPS Request", logx.Field("UUID", r.Context().Value("userId").(string)),
+				logx.Field("path", obj), logx.Field("method", act))
+			next(w, r)
+			return
+		} else {
+			logx.Errorw("the role is not permitted to access the API", logx.Field("roleId", roleIds),
+				logx.Field("path", obj), logx.Field("method", act))
+			http.Error(w, err.Error(), http.StatusForbidden)
 			return
 		}
 	}
